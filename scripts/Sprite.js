@@ -1,4 +1,5 @@
 import { utils } from "./utils";
+import shadowURL from "/images/shadow.png";
 
 export class Sprite {
   constructor(config) {
@@ -11,7 +12,7 @@ export class Sprite {
     this.useShadow = config.useShadow;
     if (this.useShadow) {
       this.shadow = new Image();
-      this.shadow.src = "assets/images/shadow.png";
+      this.shadow.src = shadowURL;
       this.shadow.onload = () => {
         this.shadowIsLoaded = true;
       };
