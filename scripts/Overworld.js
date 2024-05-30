@@ -1,6 +1,13 @@
 import { Person } from "./Person";
 import { utils } from "./utils";
 import { DirectionInput } from "./DirectionInput";
+
+import heartURL from "/images/heart.png";
+import trevorURL from "/images/trevor.png";
+import melanyURL from "/images/melany.png";
+import newBeachURL from "/images/heart.png";
+import shadowURL from "/images/shadow.png";
+
 export class Overworld {
   constructor(config) {
     this.element = config.element;
@@ -9,7 +16,7 @@ export class Overworld {
     this.melany = null;
     this.trevor = null;
     this.map = new Image();
-    this.map.src = "images/new-beach.png";
+    this.map.src = newBeachURL;
     this.yes = false;
     this.hearts = [];
   }
@@ -18,7 +25,7 @@ export class Overworld {
     this.melany = new Person({
       x: utils.widthGrid(30),
       y: utils.widthGrid(60),
-      src: "images/melany.png",
+      src: melanyURL,
       direction: "right",
       useShadow: true,
     });
@@ -26,7 +33,7 @@ export class Overworld {
     this.trevor = new Person({
       x: utils.widthGrid(16),
       y: utils.widthGrid(11),
-      src: "images/trevor.png",
+      src: trevorURL,
       direction: "down",
       useShadow: false,
     });
@@ -34,7 +41,7 @@ export class Overworld {
     this.shadow = new Person({
       x: utils.widthGrid(16),
       y: utils.widthGrid(11),
-      src: "images/shadow.png",
+      src: shadowURL,
       direction: "down",
       useShadow: false,
     });
@@ -83,7 +90,7 @@ export class Overworld {
             new Person({
               x: this.trevor.x,
               y: this.trevor.y + 8,
-              src: "images/heart.png",
+              src: heartURL,
               direction: "down",
               useShadow: false,
             })
@@ -93,7 +100,7 @@ export class Overworld {
               new Person({
                 x: this.trevor.x + Math.random() * 600 - 300,
                 y: this.trevor.y + Math.random() * 5000,
-                src: "images/heart.png",
+                src: heartURL,
                 direction: "down",
                 useShadow: false,
               })
