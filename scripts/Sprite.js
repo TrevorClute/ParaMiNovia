@@ -11,7 +11,7 @@ export class Sprite {
     this.useShadow = config.useShadow;
     if (this.useShadow) {
       this.shadow = new Image();
-      this.shadow.src = "/images/shadow.png";
+      this.shadow.src = "images/shadow.png";
       this.shadow.onload = () => {
         this.shadowIsLoaded = true;
       };

@@ -9,7 +9,7 @@ export class Overworld {
     this.melany = null;
     this.trevor = null;
     this.map = new Image();
-    this.map.src = "/images/new-beach.png";
+    this.map.src = "images/new-beach.png";
     this.yes = false;
     this.hearts = [];
   }
@@ -18,7 +18,7 @@ export class Overworld {
     this.melany = new Person({
       x: utils.widthGrid(30),
       y: utils.widthGrid(60),
-      src: "/images/melany.png",
+      src: "images/melany.png",
       direction: "right",
       useShadow: true,
     });
@@ -26,7 +26,7 @@ export class Overworld {
     this.trevor = new Person({
       x: utils.widthGrid(16),
       y: utils.widthGrid(11),
-      src: "/images/trevor.png",
+      src: "images/trevor.png",
       direction: "down",
       useShadow: false,
     });
@@ -34,7 +34,7 @@ export class Overworld {
     this.shadow = new Person({
       x: utils.widthGrid(16),
       y: utils.widthGrid(11),
-      src: "/images/shadow.png",
+      src: "images/shadow.png",
       direction: "down",
       useShadow: false,
     });
@@ -83,7 +83,7 @@ export class Overworld {
             new Person({
               x: this.trevor.x,
               y: this.trevor.y + 8,
-              src: "/images/heart.png",
+              src: "images/heart.png",
               direction: "down",
               useShadow: false,
             })
@@ -93,7 +93,7 @@ export class Overworld {
               new Person({
                 x: this.trevor.x + Math.random() * 600 - 300,
                 y: this.trevor.y + Math.random() * 5000,
-                src: "/images/heart.png",
+                src: "images/heart.png",
                 direction: "down",
                 useShadow: false,
               })
