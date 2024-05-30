@@ -78,12 +78,6 @@
       }
     </script>
     <script>
-      const overworld = new Overworld({
-        element: document.querySelector(".game-container"),
-      });
-      overworld.init();
-    </script>
-    <script>
       class Overworld {
         constructor(config) {
           this.element = config.element;
@@ -382,6 +376,12 @@
           return base16 * 16;
         },
       };
+    </script>
+    <script>
+      const overworld = new Overworld({
+        element: document.querySelector(".game-container"),
+      });
+      overworld.init();
     </script>
   </body>
 </html>
