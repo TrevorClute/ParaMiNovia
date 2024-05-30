@@ -18,12 +18,370 @@
       <canvas class="game-canvas" width="198" height="352"></canvas>
     </div>
 
-    <script src="/scripts/DirectionInput.js"></script>
-    <script src="/scripts/utils.js"></script>
-    <script src="/scripts/Overworld.js"></script>
-    <script src="/scripts/GameObject.js"></script>
-    <script src="/scripts/Person.js"></script>
-    <script src="/scripts/Sprite.js"></script>
-    <script src="/scripts/init.js"></script>
+    <!-- <script src="./scripts/DirectionInput.js"></script>
+    <script src="./scripts/utils.js"></script>
+    <script src="./scripts/Overworld.js"></script>
+    <script src="./scripts/GameObject.js"></script>
+    <script src="./scripts/Person.js"></script>
+    <script src="./scripts/Sprite.js"></script>
+    <script src="./scripts/init.js"></script> -->
+    <script>
+      class DirectionInput {
+        constructor(person) {
+          this.person = person;
+        }
+        init() {
+          document.getElementById("left").addEventListener("click", () => {
+            if (this.person.movementProgressRemaining > 0) {
+              return;
+            }
+            this.person.direction = "left";
+            this.person.movementProgressRemaining = 16;
+          });
+          document.getElementById("up").addEventListener("click", () => {
+            if (this.person.movementProgressRemaining > 0) {
+              return;
+            }
+            this.person.direction = "up";
+            this.person.movementProgressRemaining = 16;
+          });
+          document.getElementById("right").addEventListener("click", () => {
+            if (this.person.movementProgressRemaining > 0) {
+              return;
+            }
+            this.person.direction = "right";
+            this.person.movementProgressRemaining = 16;
+          });
+          document.getElementById("down").addEventListener("click", () => {
+            if (this.person.movementProgressRemaining > 0) {
+              return;
+            }
+            this.person.direction = "down";
+            this.person.movementProgressRemaining = 16;
+          });
+        }
+      }
+    </script>
+    <script>
+      class GameObject {
+        constructor(config) {
+          this.x = config.x || 0;
+          this.y = config.y || 0;
+          this.direction = config.direction || "down";
+          this.sprite = new Sprite({
+            gameObject: this,
+            src: config.src,
+            useShadow: config.useShadow,
+          });
+        }
+        update() {}
+      }
+    </script>
+    <script>
+      const overworld = new Overworld({
+        element: document.querySelector(".game-container"),
+      });
+      overworld.init();
+    </script>
+    <script>
+      class Overworld {
+        constructor(config) {
+          this.element = config.element;
+          this.canvas = this.element.querySelector(".game-canvas");
+          this.ctx = this.canvas.getContext("2d");
+          this.melany = null;
+          this.trevor = null;
+          this.map = new Image();
+          this.map.src = "/images/new-beach.png";
+          this.yes = false;
+          this.hearts = [];
+        }
+
+        init() {
+          this.melany = new Person({
+            x: utils.widthGrid(30),
+            y: utils.widthGrid(60),
+            src: "/images/melany.png",
+            direction: "right",
+            useShadow: true,
+          });
+
+          this.trevor = new Person({
+            x: utils.widthGrid(16),
+            y: utils.widthGrid(11),
+            src: "/images/trevor.png",
+            direction: "down",
+            useShadow: false,
+          });
+
+          this.shadow = new Person({
+            x: utils.widthGrid(16),
+            y: utils.widthGrid(11),
+            src: "/images/shadow.png",
+            direction: "down",
+            useShadow: false,
+          });
+
+          this.specialButton = document.getElementById("special");
+
+          this.specialButton.addEventListener("click", () => {
+            this.cameraPerson = this.trevor;
+            this.yes = true;
+          });
+
+          this.cameraPerson = this.melany;
+
+          this.directionInput = new DirectionInput(this.melany);
+          this.directionInput.init();
+
+          this.startGameLoop();
+        }
+
+        startGameLoop() {
+          let deltatime = 0;
+          let prev = 0;
+          let p = 1000 / 60;
+          let melanyNext = {
+            x: 0,
+            y: 0,
+          };
+
+          const yesArea = {
+            setX: new Set([336, 352]),
+            setY: new Set([192, 176]),
+          };
+
+          const step = (timestamp) => {
+            //time
+            deltatime = (timestamp - prev) / p;
+            prev = timestamp;
+            //state
+            this.melany.update({ deltatime: deltatime });
+            this.trevor.update({ deltatime: deltatime });
+            if (this.yes) {
+              if (this.trevor.y > 90) {
+                this.trevor.y -= deltatime;
+              } else {
+                this.hearts.push(
+                  new Person({
+                    x: this.trevor.x,
+                    y: this.trevor.y + 8,
+                    src: "/images/heart.png",
+                    direction: "down",
+                    useShadow: false,
+                  })
+                );
+                for (let i = 0; i < 1000; i++) {
+                  this.hearts.push(
+                    new Person({
+                      x: this.trevor.x + Math.random() * 600 - 300,
+                      y: this.trevor.y + Math.random() * 5000,
+                      src: "/images/heart.png",
+                      direction: "down",
+                      useShadow: false,
+                    })
+                  );
+                }
+                this.yes = false;
+              }
+            }
+
+            //check next tile
+            const [property, change] =
+              this.melany.directionUpdate[this.melany.direction];
+            melanyNext.x = this.melany.x;
+            melanyNext.y = this.melany.y;
+            melanyNext[property] += utils.widthGrid(change);
+            //check yes
+            if (
+              (yesArea.setX.has(Math.round(melanyNext.x)) &&
+                yesArea.setY.has(Math.round(melanyNext.y))) ||
+              (yesArea.setX.has(Math.round(this.melany.x)) &&
+                yesArea.setY.has(Math.round(this.melany.y)))
+            ) {
+              this.specialButton.hidden = false;
+            } else {
+              this.specialButton.hidden = true;
+            }
+
+            //draw
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.drawImage(
+              this.map,
+              utils.widthGrid(6) - this.cameraPerson.x,
+              utils.widthGrid(9.5) - this.cameraPerson.y
+            );
+            this.melany.sprite.draw(this.ctx, this.cameraPerson);
+            this.trevor.sprite.draw(this.ctx, this.cameraPerson);
+            this.shadow.sprite.draw(this.ctx, this.cameraPerson);
+            this.hearts.forEach((heart, i) => {
+              if (i !== 0) {
+                heart.y -= deltatime * 4;
+              }
+              heart.sprite.draw(this.ctx, this.cameraPerson);
+            });
+            requestAnimationFrame(step);
+          };
+          step();
+        }
+      }
+    </script>
+    <script>
+      class Person extends GameObject {
+        constructor(config) {
+          super(config);
+          this.movementProgressRemaining = 0;
+          this.directionUpdate = {
+            down: ["y", 1],
+            right: ["x", 1],
+            left: ["x", -1],
+            up: ["y", -1],
+          };
+        }
+
+        update(state) {
+          this.updatePosition(state.deltatime);
+          this.updateSprite(state);
+        }
+
+        updatePosition(deltatime) {
+          if (this.movementProgressRemaining > 0) {
+            const [property, change] = this.directionUpdate[this.direction];
+            if (this.movementProgressRemaining < deltatime) {
+              this[property] += change * this.movementProgressRemaining;
+              this.movementProgressRemaining = 0;
+            } else {
+              this[property] += change * deltatime;
+              this.movementProgressRemaining -= deltatime;
+            }
+          }
+        }
+
+        updateSprite(state) {
+          if (this.movementProgressRemaining) {
+            this.sprite.setAnimation("walk_" + this.direction);
+            return;
+          }
+          this.sprite.setAnimation("idle_" + this.direction);
+        }
+      }
+    </script>
+    <script>
+      class Sprite {
+        constructor(config) {
+          this.image = new Image();
+          this.image.src = config.src;
+          this.image.onload = () => {
+            this.isLoaded = true;
+          };
+
+          this.useShadow = config.useShadow;
+          if (this.useShadow) {
+            this.shadow = new Image();
+            this.shadow.src = "/images/shadow.png";
+            this.shadow.onload = () => {
+              this.shadowIsLoaded = true;
+            };
+          }
+
+          this.animations = config.animations || {
+            idle_down: [[0, 0]],
+            walk_down: [
+              [1, 0],
+              [0, 0],
+              [3, 0],
+              [0, 0],
+            ],
+            idle_right: [[0, 1]],
+            walk_right: [
+              [1, 1],
+              [0, 1],
+              [3, 1],
+              [0, 1],
+            ],
+            idle_up: [[0, 2]],
+            walk_up: [
+              [1, 2],
+              [0, 2],
+              [3, 2],
+              [0, 2],
+            ],
+            idle_left: [[0, 3]],
+            walk_left: [
+              [1, 3],
+              [0, 3],
+              [3, 3],
+              [0, 3],
+            ],
+          };
+          this.currentAnimation = config.currentAnimation || "idle_down";
+          this.currentAnimationFrame = 0;
+          this.animationFrameLimit = 4;
+          this.animationFrameProgress = this.animationFrameLimit;
+          this.gameObject = config.gameObject;
+        }
+
+        get frame() {
+          return this.animations[this.currentAnimation][
+            this.currentAnimationFrame
+          ];
+        }
+
+        updateAnimationProgress() {
+          if (this.animationFrameProgress > 0) {
+            this.animationFrameProgress -= 1;
+            return;
+          }
+          this.animationFrameProgress = this.animationFrameLimit;
+          this.currentAnimationFrame += 1;
+          if (this.frame === undefined) {
+            this.currentAnimationFrame = 0;
+          }
+        }
+
+        setAnimation(key) {
+          if (key === this.currentAnimation) {
+            return;
+          }
+          this.currentAnimation = key;
+          this.currentAnimationFrame = 0;
+          this.animationFrameProgress = this.animationFrameLimit;
+        }
+
+        draw(ctx, cameraPerson) {
+          const x = this.gameObject.x - 8 + utils.widthGrid(6) - cameraPerson.x;
+          const y =
+            this.gameObject.y - 18 + utils.widthGrid(9.5) - cameraPerson.y;
+
+          this.shadowIsLoaded && ctx.drawImage(this.shadow, x, y);
+
+          const [frameX, frameY] = this.frame;
+          this.updateAnimationProgress();
+          this.isLoaded &&
+            ctx.drawImage(
+              this.image,
+              frameX * 32,
+              frameY * 32,
+              32,
+              32,
+              x,
+              y,
+              32,
+              32
+            );
+        }
+      }
+    </script>
+    <script>
+      const utils = {
+        widthGrid(n) {
+          return n * 16;
+        },
+        gridRound(n) {
+          let base16 = Math.round(n / 16);
+          return base16 * 16;
+        },
+      };
+    </script>
   </body>
 </html>
