@@ -1,0 +1,68 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #333;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.game-container {
+  position: relative;
+  width: 198px;
+  height: 352px;
+  margin: 0 auto;
+  outline: 1px solid #fff;
+  transform: scale(1.8) translateY(25%);
+}
+
+.game-container canvas {
+  image-rendering: pixelated;
+}
+
+.controller {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 40px;
+  width: 120px;
+  height: 120px;
+}
+
+.button {
+  padding: 10px;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #6b0020;
+  opacity: 70%;
+  text-align: center;
+}
+
+#left {
+  left: 0;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  transform: rotate(90deg);
+}
+#right {
+  right: 0;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  transform: rotate(270deg);
+}
+#down {
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  bottom: 0;
+}
+#up {
+  top: 0;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  transform: rotate(180deg);
+}
+#special {
+  opacity: 100%;
+  border-radius: 10rem;
+  border: 1px solid darkred;
+}
