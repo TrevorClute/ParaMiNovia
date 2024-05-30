@@ -1,4 +1,4 @@
-const utils = {
+export const utils = {
   widthGrid(n) {
     return n * 16;
   },

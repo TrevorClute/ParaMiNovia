@@ -1,4 +1,7 @@
-class Overworld {
+import { Person } from "./Person";
+import { utils } from "./utils";
+import { DirectionInput } from "./DirectionInput";
+export class Overworld {
   constructor(config) {
     this.element = config.element;
     this.canvas = this.element.querySelector(".game-canvas");

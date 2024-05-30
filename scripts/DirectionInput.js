@@ -1,4 +1,4 @@
-class DirectionInput {
+export class DirectionInput {
   constructor(person) {
     this.person = person;
   }
