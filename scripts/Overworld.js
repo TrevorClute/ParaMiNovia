@@ -5,7 +5,7 @@ import { DirectionInput } from "./DirectionInput";
 import heartURL from "/images/heart.png";
 import trevorURL from "/images/trevor.png";
 import melanyURL from "/images/melany.png";
-import newBeachURL from "/images/heart.png";
+import newBeachURL from "/images/new-beach.png";
 import shadowURL from "/images/shadow.png";
 
 export class Overworld {
