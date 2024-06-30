@@ -1,9 +1,14 @@
 import { defineConfig } from "vite";
-// import mkcert from "vite-plugin-mkcert";
 
 export default defineConfig({
-  //   plugins: [mkcert()],
-  //   server: { https: true }, // Not needed for Vite 5+
   plugins: [],
   server: {}, // Not needed for Vite 5+
+  build: {
+    rollupOptions: {
+      input: {
+        index: "/index.html",
+        oneMonth: "/1month<3.html",
+      },
+    },
+  },
 });
