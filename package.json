@@ -11,5 +11,8 @@
   "devDependencies": {
     "vite": "^5.2.0",
     "vite-plugin-mkcert": "^1.17.5"
+  },
+  "dependencies": {
+    "face-api.js": "^0.22.2"
   }
 }

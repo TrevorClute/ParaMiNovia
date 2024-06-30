@@ -66,3 +66,61 @@ body {
   border-radius: 10rem;
   border: 1px solid darkred;
 }
+
+.wordle-container {
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  gap: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.row {
+  display: flex;
+  background-color: pink;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  flex: 1;
+  border-radius: 4px;
+}
+
+.block {
+  aspect-ratio: 1/1;
+  border-radius: 3px;
+  background-color: #eee;
+  flex: 1;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  font-size: xx-large;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+#wordle-input {
+  text-transform: lowercase;
+  width: 70vw;
+  background-color: #eee;
+  font-family: "Courier New", Courier, monospace;
+  font-size: xx-large;
+  text-align: center;
+}
+.header {
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  font-size: xx-large;
+  color: white;
+}
+
+#dialog {
+  width: 90vw;
+  height: 70vw;
+  font-family: "Courier New", Courier, monospace;
+}
+#first-dialog {
+}
