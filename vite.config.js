@@ -1,8 +1,14 @@
 import { defineConfig } from "vite";
+import mkcert from "vite-plugin-mkcert";
 
 export default defineConfig({
-  plugins: [],
-  server: {}, // Not needed for Vite 5+
+  plugins: [mkcert()],
+  server: {
+    hmr: {
+      overlay: false,
+    },
+    https: true,
+  }, // Not needed for Vite 5+
   build: {
     rollupOptions: {
       input: {
