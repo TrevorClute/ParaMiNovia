@@ -14,7 +14,7 @@ export default defineConfig({
       input: {
         index: "/index.html",
         oneMonth: "/1month<3.html",
-        sorry: "/will_you_be_mine_again.html",
+        sorry: "/will_you_be_mine_again?.html",
       },
     },
   },
