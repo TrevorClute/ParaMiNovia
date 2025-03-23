@@ -27,11 +27,11 @@ async function init() {
     loadingMessage.style.color = "red";
   }
   await Promise.all([
-    faceapi.nets.ssdMobilenetv1.loadFromUri("./models"),
-    faceapi.nets.faceLandmark68Net.loadFromUri("./models"),
-    faceapi.nets.faceRecognitionNet.loadFromUri("./models"),
-    faceapi.nets.ageGenderNet.loadFromUri("./models"),
-    faceapi.nets.faceExpressionNet.loadFromUri("./models"),
+    faceapi.nets.ssdMobilenetv1.loadFromUri(import.meta.env.BASE_URL+"models"),
+    faceapi.nets.faceLandmark68Net.loadFromUri(import.meta.env.BASE_URL+"models"),
+    faceapi.nets.faceRecognitionNet.loadFromUri(import.meta.env.BASE_URL+"models"),
+    faceapi.nets.ageGenderNet.loadFromUri(import.meta.env.BASE_URL+"models"),
+    faceapi.nets.faceExpressionNet.loadFromUri(import.meta.env.BASE_URL+"models"),
   ]);
 
   const canvas = document.getElementById("camera-canvas");
@@ -58,7 +58,7 @@ async function init() {
     faceapi.draw.drawFaceLandmarks(canvas, faceAIData);
 
     faceAIData.forEach((face) => {
-      const { descriptor, detection } = face;
+      const { descriptor} = face;
       let label = faceMatcher.findBestMatch(descriptor).toString();
       let text = "";
       if (label.includes("unknown")) {
