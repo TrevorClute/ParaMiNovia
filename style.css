@@ -1,6 +1,6 @@
-* {
-  box-sizing: border-box;
-}
+/** {*/
+/*  box-sizing: border-box;*/
+/*}*/
 
 body {
   background: #333;
@@ -47,20 +47,24 @@ body {
   clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
   transform: rotate(90deg);
 }
+
 #right {
   right: 0;
   clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
   transform: rotate(270deg);
 }
+
 #down {
   clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
   bottom: 0;
 }
+
 #up {
   top: 0;
   clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
   transform: rotate(180deg);
 }
+
 #special {
   opacity: 100%;
   border-radius: 10rem;
@@ -102,6 +106,7 @@ body {
   justify-content: center;
   margin-top: 10px;
 }
+
 #wordle-input {
   text-transform: lowercase;
   width: 70vw;
@@ -110,6 +115,7 @@ body {
   font-size: xx-large;
   text-align: center;
 }
+
 .header {
   text-align: center;
   font-family: "Courier New", Courier, monospace;
@@ -122,8 +128,43 @@ body {
   height: 70vw;
   font-family: "Courier New", Courier, monospace;
 }
+
 #first-dialog {
 }
 
+#camera-stream {
+}
 
+.camera-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
 
+#camera-canvas {
+  position: absolute;
+}
+
+#loading-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.2rem;
+  z-index: 1;
+}
+
+#scanning-text {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.5rem;
+  z-index: 1;
+}
