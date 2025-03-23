@@ -27,11 +27,11 @@ async function init() {
     loadingMessage.style.color = "red";
   }
   await Promise.all([
-    faceapi.nets.ssdMobilenetv1.loadFromUri("./public/models"),
-    faceapi.nets.faceLandmark68Net.loadFromUri("./public/models"),
-    faceapi.nets.faceRecognitionNet.loadFromUri("./public/models"),
-    faceapi.nets.ageGenderNet.loadFromUri("./public/models"),
-    faceapi.nets.faceExpressionNet.loadFromUri("./public/models"),
+    faceapi.nets.ssdMobilenetv1.loadFromDisk("models"),
+    faceapi.nets.faceLandmark68Net.loadFromDisk("./models"),
+    faceapi.nets.faceRecognitionNet.loadFromDisk("./models"),
+    faceapi.nets.ageGenderNet.loadFromDisk("./models"),
+    faceapi.nets.faceExpressionNet.loadFromDisk("./models"),
   ]);
 
   const canvas = document.getElementById("camera-canvas");
