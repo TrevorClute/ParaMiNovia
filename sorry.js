@@ -26,12 +26,13 @@ async function init() {
     loadingMessage.textContent = "Error: Could not access camera";
     loadingMessage.style.color = "red";
   }
+  const modelPath = "https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights"
   await Promise.all([
-    faceapi.nets.ssdMobilenetv1.loadFromUri("/models"),
-    faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-    faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
-    faceapi.nets.ageGenderNet.loadFromUri("/models"),
-    faceapi.nets.faceExpressionNet.loadFromUri("/models"),
+    faceapi.nets.ssdMobilenetv1.loadFromUri(modelPath),
+    faceapi.nets.faceLandmark68Net.loadFromUri(modelPath),
+    faceapi.nets.faceRecognitionNet.loadFromUri(modelPath),
+    faceapi.nets.ageGenderNet.loadFromUri(modelPath),
+    faceapi.nets.faceExpressionNet.loadFromUri(modelPath),
   ]);
 
   const canvas = document.getElementById("camera-canvas");
